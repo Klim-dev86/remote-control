@@ -1,5 +1,5 @@
 import { WebSocketServer } from 'ws';
-import { moveMouseY, moveMouseX, drawSquare } from '../robot';
+import { moveMouseY, moveMouseX, drawSquare, drawRect, drawCircle, getMousePos } from '../robot';
 
 export const wss = new WebSocketServer({ port: 8080 });
 
@@ -38,7 +38,17 @@ wss.on('connection', function connection(wss) {
       drawSquare(Number(params[0]))
     }
 
-  });
+    if (command === 'draw_rectangle') {
+      drawRect(Number(params[0]), Number(params[1]))
+    }
 
-  wss.send('something');
+    if (command === 'draw_circle') {
+      drawCircle(Number(params[0]))
+    }
+
+    if (command === 'mouse_position') {
+      getMousePos(wss)
+    }
+
+  });
 });
